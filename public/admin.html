@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MirrorMyTV - Admin Panel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen">
+  <div class="container mx-auto px-4 py-8 max-w-7xl">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-5xl font-bold text-white mb-2">⚙️ MirrorMyTV Admin</h1>
+      <p class="text-purple-200 text-lg">Server Administration Panel</p>
+    </div>
+
+    <!-- Stats Card -->
+    <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 mb-6 border border-white/20">
+      <h2 class="text-white font-semibold text-xl mb-4">📊 Server Statistics</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-white/5 p-4 rounded-lg">
+          <p class="text-purple-200 text-sm">Active Streams</p>
+          <p id="activeStreamsCount" class="text-white text-3xl font-bold">0/10</p>
+        </div>
+        <div class="bg-white/5 p-4 rounded-lg">
+          <p class="text-purple-200 text-sm">Total Errors</p>
+          <p id="totalErrors" class="text-white text-3xl font-bold">0</p>
+        </div>
+        <div class="bg-white/5 p-4 rounded-lg">
+          <p class="text-purple-200 text-sm">Server Status</p>
+          <p class="text-green-400 text-3xl font-bold">🟢 Online</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Streams -->
+    <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 mb-6 border border-white/20">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-white font-semibold text-xl">📺 Active Streams</h2>
+        <div class="space-x-2">
+          <button id="refreshStreams" class="bg-white/10 hover:bg-white/20 text-white py-2 px-4 rounded-lg transition-colors text-sm">
+            🔄 Refresh
+          </button>
+          <button id="stopAllStreams" class="bg-red-500/20 hover:bg-red-500/30 text-white py-2 px-4 rounded-lg transition-colors text-sm">
+            ⏹️ Stop All
+          </button>
+        </div>
+      </div>
+      <div id="streamsList" class="space-y-2">
+        <p class="text-purple-200 text-center py-4">No active streams</p>
+      </div>
+    </div>
+
+    <!-- Error Log -->
+    <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 mb-6 border border-white/20">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-white font-semibold text-xl">⚠️ Error Log</h2>
+        <button id="clearErrors" class="bg-white/10 hover:bg-white/20 text-white py-2 px-4 rounded-lg transition-colors text-sm">
+          🗑️ Clear Log
+        </button>
+      </div>
+      <div id="errorLog" class="space-y-2 max-h-96 overflow-y-auto">
+        <p class="text-purple-200 text-center py-4">No errors</p>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+      <h2 class="text-white font-semibold text-xl mb-4">🚀 Quick Actions</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a href="/" class="bg-purple-600 hover:bg-purple-700 text-white py-3 px-6 rounded-lg transition-colors text-center font-semibold">
+          📺 Go to Client View
+        </a>
+        <button id="viewLogs" class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg transition-colors font-semibold">
+          📋 View Server Logs
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
+

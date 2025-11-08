@@ -1,0 +1,32 @@
+services:
+  mirror-mytv:
+    build: .
+    container_name: mirror-mytv
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    volumes:
+      # Mount for HLS segments if using HLS mode
+      - ./public/stream:/app/public/stream
+    restart: unless-stopped
+    # Windows-specific settings
+    platform: linux/amd64
+    # Note: Screen capture will be done from host, not from container
+    
+  # Optional: nginx-rtmp for better streaming (uncomment if needed)
+  # nginx-rtmp:
+  #   image: tiangolo/nginx-rtmp
+  #   container_name: nginx-rtmp
+  #   ports:
+  #     - "1935:1935"
+  #     - "8080:8080"
+  #   networks:
+  #     - mirror-network
+  #   restart: unless-stopped
+
+networks:
+  mirror-network:
+    driver: bridge
+
